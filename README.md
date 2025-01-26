@@ -1,11 +1,12 @@
 # Simple Translation App
 
-A simple translation app built with React and Google Cloud Translation API. It supports right-to-left languages such as Arabic and Hebrew and translates text into English.
+A simple translation app built with React and Google Cloud Translation API. It supports right-to-left languages such as Arabic and Hebrew, and translates text into English. Users can also manually toggle between RTL (right-to-left) and LTR (left-to-right) layouts.
 
 ## Features
 
 - Input text and translate it to English.
-- Detect language and support RTL (right-to-left) layout for languages like Arabic and Hebrew.
+- Detect language and automatically support RTL (right-to-left) layout for languages like Arabic and Hebrew.
+- Manual toggle for switching between RTL and LTR layout.
 - Responsive UI with error handling for empty inputs or API failures.
 
 ## Requirements
@@ -54,6 +55,7 @@ You can deploy the app to [Vercel](https://vercel.com/) or [Netlify](https://www
 1. Enter text into the text box.
 2. Click the "Translate" button to get the translation.
 3. The translated text will appear below, with proper RTL support if the language requires it.
+4. Click the "Switch to RTL" or "Switch to LTR" button to toggle the layout direction manually.
 
 ## License
 
