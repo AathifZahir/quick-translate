@@ -1,0 +1,110 @@
+/* src/App.css */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: "Arial", sans-serif;
+  background-color: #f4f7fc;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+textarea {
+  width: 100%;
+  max-width: 600px;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:focus {
+  outline: none;
+}
+
+button + button {
+  margin-left: 10px;
+}
+
+.translated-text {
+  max-width: 600px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 8px;
+  word-wrap: break-word;
+  font-size: 16px;
+  min-height: 50px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .app {
+    padding: 15px;
+  }
+
+  textarea {
+    max-width: 100%;
+  }
+
+  .translated-text {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  textarea {
+    font-size: 14px;
+  }
+
+  .translated-text {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
