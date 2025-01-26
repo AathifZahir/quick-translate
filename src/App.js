@@ -7,76 +7,174 @@ const App = () => {
   const [translatedText, setTranslatedText] = useState("");
   const [error, setError] = useState(null);
   const [isRtl, setIsRtl] = useState(false);
-  const [isManualRtl, setIsManualRtl] = useState(false); // New state for manual RTL toggle
+  const [languageOption, setLanguageOption] = useState("detect"); // 'detect' or selected language code
+  const [selectedLanguage, setSelectedLanguage] = useState("en"); // Default to English
+  const [charLimit] = useState(1000); // Set your desired character limit
 
-  // Handle input change
+  // Handle input change with character limit check
   const handleTextChange = (e) => {
-    setInputText(e.target.value);
+    const newText = e.target.value;
+    if (newText.length <= charLimit) {
+      setInputText(newText);
+    }
   };
 
-  // Handle translation API call
   const handleTranslate = async () => {
     if (!inputText.trim()) {
       setError("Input text cannot be empty.");
       return;
     }
+
+    // Check if the input text exceeds the character limit
+    if (inputText.length > charLimit) {
+      setError(`Input text cannot exceed ${charLimit} characters.`);
+      return;
+    }
     setError(null); // Clear previous errors
 
+    if (languageOption === "select" && selectedLanguage === "en") {
+      setTranslatedText(inputText);
+      return;
+    }
+
     try {
+      // Prepare parameters for the API call
+      const params = {
+        key: process.env.REACT_APP_GOOGLE_API_KEY,
+        target: "en",
+        ...(languageOption === "select" && { source: selectedLanguage }),
+      };
+
+      console.log(params);
+
       const response = await axios.post(
         "https://translation.googleapis.com/language/translate/v2",
         {
           q: inputText,
-          target: "en",
           format: "text",
         },
         {
           headers: { "Content-Type": "application/json" },
-          params: { key: process.env.REACT_APP_GOOGLE_API_KEY },
+          params,
         }
       );
+
+      console.log(response);
 
       const translated = response.data.data.translations[0].translatedText;
       setTranslatedText(translated);
 
-      // Detect language automatically but allow manual override of RTL
+      // Check detected source language for RTL text direction
       const detectedLang =
         response.data.data.translations[0].detectedSourceLanguage;
-      if (!isManualRtl) {
-        // Only set RTL if manual toggle is off
-        setIsRtl(detectedLang === "ar" || detectedLang === "he");
-      }
+      setIsRtl(detectedLang === "ar" || detectedLang === "he");
     } catch (err) {
       setError("Translation failed. Please try again.");
+      console.error(err.response?.data || err.message);
     }
   };
 
-  // Handle manual RTL/LTR toggle
-  const toggleRtl = () => {
-    setIsManualRtl(!isManualRtl);
-    setIsRtl(!isRtl); // Toggle RTL/LTR on button click
+  // Handle language option change
+  const handleLanguageOptionChange = (e) => {
+    setLanguageOption(e.target.value);
+  };
+
+  // Handle selected language change
+  const handleSelectedLanguageChange = (e) => {
+    setSelectedLanguage(e.target.value);
+  };
+
+  // Toggle RTL/LTR direction
+  const toggleDirection = () => {
+    setIsRtl((prevIsRtl) => !prevIsRtl);
   };
 
   return (
     <div className="app">
       <h1>Simple Translation App</h1>
-      <textarea
-        placeholder="Enter text here"
-        value={inputText}
-        onChange={handleTextChange}
-        rows="4"
-        style={{ direction: isRtl ? "rtl" : "ltr" }} // Dynamically apply LTR/RTL
-      />
-      <button onClick={handleTranslate}>Translate</button>
-      <button onClick={toggleRtl} style={{ marginTop: "10px" }}>
-        {isRtl ? "Switch to LTR" : "Switch to RTL"} {/* Toggle button text */}
-      </button>
-      {error && <div className="error">{error}</div>}
-      <div
-        className="translated-text"
-        style={{ direction: isRtl ? "rtl" : "ltr" }} // Dynamically apply LTR/RTL to translated text
-      >
-        {translatedText || "Translated text will appear here."}
+      <div className="content">
+        <div className="input-section">
+          <div className="language-options">
+            <label>
+              <input
+                type="radio"
+                value="detect"
+                checked={languageOption === "detect"}
+                onChange={handleLanguageOptionChange}
+              />
+              Detect Language
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="select"
+                checked={languageOption === "select"}
+                onChange={handleLanguageOptionChange}
+              />
+              Select Language:
+            </label>
+            {languageOption === "select" && (
+              <select
+                value={selectedLanguage}
+                onChange={handleSelectedLanguageChange}
+              >
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="ar">Arabic</option>
+                <option value="zh">Chinese</option>
+              </select>
+            )}
+          </div>
+          <div className="fields">
+            <div className="inputfield">
+              <textarea
+                placeholder="Enter text here"
+                value={inputText}
+                onChange={handleTextChange}
+                rows="6"
+                style={{ direction: isRtl ? "rtl" : "ltr" }}
+              />
+              <div className="char-count">
+                {inputText.length}/{charLimit}
+              </div>
+            </div>
+            <div className="outputfield">
+              <textarea
+                value={translatedText || "Translated text will appear here."}
+                readOnly
+                rows="6"
+                style={{
+                  direction: isRtl ? "rtl" : "ltr",
+                  backgroundColor: "#f0f0f0",
+                  color: "#555",
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Error Message Section */}
+          {error && (
+            <div
+              className="error-message"
+              style={{
+                color: "red",
+                fontWeight: "bold",
+                marginTop: "10px",
+              }}
+            >
+              {error}
+            </div>
+          )}
+
+          <button onClick={handleTranslate}>Translate</button>
+
+          {/* Toggle RTL/LTR Button */}
+          <button onClick={toggleDirection} style={{ marginTop: "10px" }}>
+            Toggle Direction
+          </button>
+        </div>
       </div>
     </div>
   );

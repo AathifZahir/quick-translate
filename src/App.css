@@ -1,110 +1,131 @@
-/* src/App.css */
+/* App.css */
 
-.app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  font-family: "Arial", sans-serif;
-  background-color: #f4f7fc;
-  padding: 20px;
-  box-sizing: border-box;
+:root {
+  --bg-color: #f7f9fc;
+  --primary-color: #1e88e5;
+  --secondary-color: #64b5f6;
+  --text-color: #2e3a59;
+  --border-color: #dde4ee;
+  --error-color: #e57373;
+  --success-color: #4caf50;
 }
 
-h1 {
-  color: #333;
-  margin-bottom: 20px;
-  font-size: 2rem;
-  text-align: center;
+body {
+  margin: 10px;
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
 }
 
 textarea {
-  width: 100%;
-  max-width: 600px;
-  padding: 12px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  border: 1px solid #ccc;
+  width: 90%;
+  height: 80%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 1rem;
+  color: var(--text-color);
+  font-family: inherit;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+select {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  resize: vertical;
-  transition: all 0.3s ease;
+  background-color: #fff;
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 button {
-  padding: 12px 24px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #4caf50;
-  color: white;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: #fff;
   border: none;
   border-radius: 8px;
-  margin-bottom: 10px;
+  font-size: 1rem;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: var(--secondary-color);
 }
 
-button:focus {
-  outline: none;
-}
-
-button + button {
-  margin-left: 10px;
-}
-
-.translated-text {
-  max-width: 600px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  margin-top: 20px;
-  background-color: white;
+textarea {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 1rem;
   border-radius: 8px;
-  word-wrap: break-word;
-  font-size: 16px;
-  min-height: 50px;
-  text-align: center;
-  transition: all 0.3s ease;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+}
+
+textarea::placeholder {
+  color: var(--border-color);
+}
+
+.fields {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 400px;
+}
+
+.inputfield,
+.outputfield {
+  flex: 1;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.outputfield textarea {
+  background-color: #f0f0f0;
+  color: #555;
+  resize: none;
+  cursor: not-allowed;
 }
 
 .error {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
-  text-align: center;
+  color: var(--error-color);
+  font-weight: bold;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .app {
-    padding: 15px;
-  }
-
-  textarea {
-    max-width: 100%;
-  }
-
-  .translated-text {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  textarea {
-    font-size: 14px;
-  }
-
-  .translated-text {
-    font-size: 14px;
-  }
-
-  button {
-    font-size: 14px;
-  }
+.success {
+  color: var(--success-color);
+  font-weight: bold;
 }
