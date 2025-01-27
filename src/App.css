@@ -10,11 +10,51 @@
   --success-color: #4caf50;
 }
 
+//Header styles
+.header {
+  background-color: white;
+  padding: 10px 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.app-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: --text-color;
+  margin: 0;
+}
+
+.header-section {
+  padding: 15px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
 body {
-  margin: 10px;
   font-family: "Inter", sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
+}
+
+.content {
+  margin: 25px 20px 0 20px;
 }
 
 .container {
@@ -28,6 +68,11 @@ body {
   overflow: hidden;
 }
 
+.language-options label {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
 .column {
   flex: 1;
   display: flex;
@@ -38,6 +83,10 @@ body {
   padding: 1.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   overflow-y: auto;
+}
+
+.fields {
+  margin-top: 1rem;
 }
 
 textarea {
@@ -70,6 +119,7 @@ select {
 
 button {
   padding: 0.5rem 1rem;
+  margin-right: 1rem;
   background-color: var(--primary-color);
   color: #fff;
   border: none;

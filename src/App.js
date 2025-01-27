@@ -1,15 +1,19 @@
+// App.js - Main application component for a simple translation app.
+// Features include text input, character limit enforcement, language detection,
+// language selection, and translation using Google's Translation API.
 import React, { useState } from "react";
 import axios from "axios";
 import "./App.css";
+import Header from "./component/Header";
 
 const App = () => {
   const [inputText, setInputText] = useState("");
   const [translatedText, setTranslatedText] = useState("");
   const [error, setError] = useState(null);
   const [isRtl, setIsRtl] = useState(false);
-  const [languageOption, setLanguageOption] = useState("detect"); // 'detect' or selected language code
-  const [selectedLanguage, setSelectedLanguage] = useState("en"); // Default to English
-  const [charLimit] = useState(1000); // Set your desired character limit
+  const [languageOption, setLanguageOption] = useState("detect");
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [charLimit] = useState(1000);
 
   // Handle input change with character limit check
   const handleTextChange = (e) => {
@@ -19,18 +23,18 @@ const App = () => {
     }
   };
 
+  // Handle translation API call
   const handleTranslate = async () => {
     if (!inputText.trim()) {
       setError("Input text cannot be empty.");
       return;
     }
 
-    // Check if the input text exceeds the character limit
     if (inputText.length > charLimit) {
       setError(`Input text cannot exceed ${charLimit} characters.`);
       return;
     }
-    setError(null); // Clear previous errors
+    setError(null);
 
     if (languageOption === "select" && selectedLanguage === "en") {
       setTranslatedText(inputText);
@@ -38,7 +42,6 @@ const App = () => {
     }
 
     try {
-      // Prepare parameters for the API call
       const params = {
         key: process.env.REACT_APP_GOOGLE_API_KEY,
         target: "en",
@@ -91,7 +94,9 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1>Simple Translation App</h1>
+      <div className="header-section">
+        <Header />
+      </div>
       <div className="content">
         <div className="input-section">
           <div className="language-options">
@@ -113,19 +118,25 @@ const App = () => {
               />
               Select Language:
             </label>
-            {languageOption === "select" && (
-              <select
-                value={selectedLanguage}
-                onChange={handleSelectedLanguageChange}
-              >
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <option value="fr">French</option>
-                <option value="de">German</option>
-                <option value="ar">Arabic</option>
-                <option value="zh">Chinese</option>
-              </select>
-            )}
+            {/* Always show the dropdown */}
+            <select
+              value={selectedLanguage}
+              onChange={handleSelectedLanguageChange}
+              disabled={languageOption !== "select"}
+              style={{
+                backgroundColor:
+                  languageOption !== "select" ? "#f0f0f0" : "white",
+                color: languageOption !== "select" ? "#888" : "black",
+                cursor: languageOption !== "select" ? "not-allowed" : "pointer",
+              }}
+            >
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="fr">French</option>
+              <option value="de">German</option>
+              <option value="ar">Arabic</option>
+              <option value="zh">Chinese</option>
+            </select>
           </div>
           <div className="fields">
             <div className="inputfield">
@@ -172,7 +183,7 @@ const App = () => {
 
           {/* Toggle RTL/LTR Button */}
           <button onClick={toggleDirection} style={{ marginTop: "10px" }}>
-            Toggle Direction
+            {isRtl ? "Switch to LTR" : "Switch to RTL"}
           </button>
         </div>
       </div>
