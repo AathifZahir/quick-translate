@@ -1,21 +1,36 @@
 // App.js - Main application component for a simple translation app.
 // Features include text input, character limit enforcement, language detection,
 // language selection, and translation using Google's Translation API.
+
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Header from "./component/Header";
 
 const App = () => {
   const [inputText, setInputText] = useState("");
   const [translatedText, setTranslatedText] = useState("");
-  const [error, setError] = useState(null);
   const [isRtl, setIsRtl] = useState(false);
   const [languageOption, setLanguageOption] = useState("detect");
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [charLimit] = useState(1000);
 
-  // Handle input change with character limit check
+  // Function to show error messages using toast
+  const showError = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "colored",
+    });
+  };
+
+  // Function to handle text input
   const handleTextChange = (e) => {
     const newText = e.target.value;
     if (newText.length <= charLimit) {
@@ -23,18 +38,17 @@ const App = () => {
     }
   };
 
-  // Handle translation API call
+  // Function to handle API call for translation
   const handleTranslate = async () => {
     if (!inputText.trim()) {
-      setError("Input text cannot be empty.");
+      showError("Input text cannot be empty.");
       return;
     }
 
     if (inputText.length > charLimit) {
-      setError(`Input text cannot exceed ${charLimit} characters.`);
+      showError(`Input text cannot exceed ${charLimit} characters.`);
       return;
     }
-    setError(null);
 
     if (languageOption === "select" && selectedLanguage === "en") {
       setTranslatedText(inputText);
@@ -48,8 +62,7 @@ const App = () => {
         ...(languageOption === "select" && { source: selectedLanguage }),
       };
 
-      console.log(params);
-
+      // API call to Google Translation API
       const response = await axios.post(
         "https://translation.googleapis.com/language/translate/v2",
         {
@@ -62,43 +75,50 @@ const App = () => {
         }
       );
 
-      console.log(response);
-
       const translated = response.data.data.translations[0].translatedText;
       setTranslatedText(translated);
 
-      // Check detected source language for RTL text direction
       const detectedLang =
         response.data.data.translations[0].detectedSourceLanguage;
       setIsRtl(detectedLang === "ar" || detectedLang === "he");
     } catch (err) {
-      setError("Translation failed. Please try again.");
+      showError("Translation failed. Please try again.");
       console.error(err.response?.data || err.message);
     }
   };
 
-  // Handle language option change
+  // Function to handle language option change
   const handleLanguageOptionChange = (e) => {
     setLanguageOption(e.target.value);
   };
 
-  // Handle selected language change
+  // Function to handle selected language change
   const handleSelectedLanguageChange = (e) => {
     setSelectedLanguage(e.target.value);
+    if (languageOption === "select") {
+      setTranslatedText("");
+    }
+    if (e.target.value === "ar" || e.target.value === "he") {
+      setIsRtl(true);
+    } else {
+      setIsRtl(false);
+    }
   };
 
-  // Toggle RTL/LTR direction
+  // Function to toggle text direction
   const toggleDirection = () => {
     setIsRtl((prevIsRtl) => !prevIsRtl);
   };
 
   return (
     <div className="app">
+      <ToastContainer />
       <div className="header-section">
         <Header />
       </div>
       <div className="content">
         <div className="input-section">
+          {/* Language Options */}
           <div className="language-options">
             <label>
               <input
@@ -118,17 +138,10 @@ const App = () => {
               />
               Select Language:
             </label>
-            {/* Always show the dropdown */}
             <select
               value={selectedLanguage}
               onChange={handleSelectedLanguageChange}
               disabled={languageOption !== "select"}
-              style={{
-                backgroundColor:
-                  languageOption !== "select" ? "#f0f0f0" : "white",
-                color: languageOption !== "select" ? "#888" : "black",
-                cursor: languageOption !== "select" ? "not-allowed" : "pointer",
-              }}
             >
               <option value="en">English</option>
               <option value="es">Spanish</option>
@@ -136,54 +149,32 @@ const App = () => {
               <option value="de">German</option>
               <option value="ar">Arabic</option>
               <option value="zh">Chinese</option>
+              <option value="he">Hebrew</option>
             </select>
           </div>
+          {/* Input and Output Fields */}
           <div className="fields">
-            <div className="inputfield">
-              <textarea
-                placeholder="Enter text here"
-                value={inputText}
-                onChange={handleTextChange}
-                rows="6"
-                style={{ direction: isRtl ? "rtl" : "ltr" }}
-              />
-              <div className="char-count">
-                {inputText.length}/{charLimit}
-              </div>
-            </div>
-            <div className="outputfield">
-              <textarea
-                value={translatedText || "Translated text will appear here."}
-                readOnly
-                rows="6"
-                style={{
-                  direction: isRtl ? "rtl" : "ltr",
-                  backgroundColor: "#f0f0f0",
-                  color: "#555",
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Error Message Section */}
-          {error && (
-            <div
-              className="error-message"
+            <textarea
+              placeholder="Enter text here"
+              value={inputText}
+              onChange={handleTextChange}
+              rows="6"
+              style={{ direction: isRtl ? "rtl" : "ltr" }}
+            />
+            <textarea
+              value={translatedText || "Translated text will appear here."}
+              readOnly
+              rows="6"
               style={{
-                color: "red",
-                fontWeight: "bold",
-                marginTop: "10px",
+                direction: isRtl ? "rtl" : "ltr",
+                backgroundColor: "#f0f0f0",
               }}
-            >
-              {error}
-            </div>
-          )}
-
+            />
+          </div>
+          {/* Buttons */}
           <button onClick={handleTranslate}>Translate</button>
-
-          {/* Toggle RTL/LTR Button */}
-          <button onClick={toggleDirection} style={{ marginTop: "10px" }}>
-            {isRtl ? "Switch to LTR" : "Switch to RTL"}
+          <button onClick={toggleDirection}>
+            {isRtl ? "Switch to LTR" : "Switch to RTL"} {/* Dynamic text */}
           </button>
         </div>
       </div>
