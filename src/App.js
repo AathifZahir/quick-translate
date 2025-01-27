@@ -90,6 +90,9 @@ const App = () => {
   // Function to handle language option change
   const handleLanguageOptionChange = (e) => {
     setLanguageOption(e.target.value);
+    if (e.target.value === "detect") {
+      setIsRtl(false);
+    }
   };
 
   // Function to handle selected language change
