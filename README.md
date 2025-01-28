@@ -1,8 +1,10 @@
 # Quick Translate
 
-[![Vercel](https://img.shields.io/badge/Hosted%20on-Vercel-blue?logo=vercel)](https://quick-translate-ojfd1p7yi-aathifzahirs-projects.vercel.app/) [![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)](https://react.dev/) [![Axios](https://img.shields.io/badge/Backend%20API-Axios-orange?logo=axios)](https://axios-http.com/) [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE) [![Tests](https://img.shields.io/badge/Testing-Passing-brightgreen?logo=jest)](https://jestjs.io/) [![Code Style](https://img.shields.io/badge/Code%20Style-Prettier-yellow?logo=prettier)](https://prettier.io/)  
+[![Vercel](https://img.shields.io/badge/Hosted%20on-Vercel-blue?logo=vercel)](https://quick-translate-ojfd1p7yi-aathifzahirs-projects.vercel.app/) [![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)](https://react.dev/) [![Axios](https://img.shields.io/badge/Backend%20API-Axios-orange?logo=axios)](https://axios-http.com/) [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE) [![Tests](https://img.shields.io/badge/Testing-Passing-brightgreen?logo=jest)](https://jestjs.io/) [![Code Style](https://img.shields.io/badge/Code%20Style-Prettier-yellow?logo=prettier)](https://prettier.io/)
 
 Quick Translate is a simple translation app built with ReactJS. It allows users to input text, translate it using Google's Translation API, and supports features like text direction switching, character limits, and language detection.
+
+![App Preview](assets/preview.png)
 
 ## 🚀 Live Demo
 
@@ -16,6 +18,17 @@ Quick Translate is a simple translation app built with ReactJS. It allows users 
 - **Text Direction:** Switch between Left-to-Right (LTR) and Right-to-Left (RTL) directions.
 - **Error Handling:** Displays toast notifications for errors like empty input or API failures.
 - **Responsive Design:** Fully optimized for all screen sizes.
+
+## 📖 API Documentation
+
+- Quick Translate integrates the [Google Translation API](https://cloud.google.com/translate/docs) for translations.
+- For more information, see the [Google Translation API Documentation](https://cloud.google.com/translate/docs).
+
+## ⚠️ Error Handling
+
+- **Empty Input:** Displays a toast notification saying, "Input cannot be empty."
+- **Character Limit Exceeded:** Warns the user if the input exceeds 1000 characters.
+- **API Failure:** Alerts users with "Translation failed. Please try again later."
 
 ## 🖥️ Tech Stack
 
@@ -63,6 +76,7 @@ Quick Translate is a simple translation app built with ReactJS. It allows users 
 
 ```
 src/
+├── assets/              # Static assets (e.g., images)
 ├── components/          # Reusable components
 ├── styles/              # CSS files
 ├── App.js               # Main application component
@@ -80,13 +94,21 @@ To run tests, use the following command:
 npm test
 ```
 
+## 🤝 Contribution Guidelines
+
+Contributions are welcome! Follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch with a descriptive name (e.g., `feature/rtl-support`).
+3. Make your changes, ensuring they align with the code style (Prettier is recommended).
+4. Commit changes with clear messages.
+5. Submit a pull request and wait for feedback.
+
+For more details, refer to [CONTRIBUTING.md](CONTRIBUTING.md) (if available).
+
 ## 📝 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! If you have suggestions or find bugs, please feel free to open an issue or submit a pull request.
 
 ## 🫂 Support
 
