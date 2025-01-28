@@ -1,62 +1,93 @@
-# Simple Translation App
+# Quick Translate
 
-A simple translation app built with React and Google Cloud Translation API. It supports right-to-left languages such as Arabic and Hebrew and translates text into English.
+[![Vercel](https://img.shields.io/badge/Hosted%20on-Vercel-blue?logo=vercel)](https://quick-translate-ojfd1p7yi-aathifzahirs-projects.vercel.app/) [![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)](https://react.dev/) [![Axios](https://img.shields.io/badge/Backend%20API-Axios-orange?logo=axios)](https://axios-http.com/) [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE) [![Tests](https://img.shields.io/badge/Testing-Passing-brightgreen?logo=jest)](https://jestjs.io/) [![Code Style](https://img.shields.io/badge/Code%20Style-Prettier-yellow?logo=prettier)](https://prettier.io/)  
 
-## Features
+Quick Translate is a simple translation app built with ReactJS. It allows users to input text, translate it using Google's Translation API, and supports features like text direction switching, character limits, and language detection.
 
-- Input text and translate it to English.
-- Detect language and support RTL (right-to-left) layout for languages like Arabic and Hebrew.
-- Responsive UI with error handling for empty inputs or API failures.
+## 🚀 Live Demo
 
-## Requirements
+[Visit Quick Translate](https://quick-translate-ojfd1p7yi-aathifzahirs-projects.vercel.app/)
 
-- Node.js >= v14.x
-- React.js
-- Google Cloud Translation API Key (free trial available)
+## 🛠️ Features
 
-## Setup
+- **Language Detection:** Automatically detect the input language.
+- **Multi-Language Support:** Translate text into multiple languages, including English, Spanish, French, Arabic, and more.
+- **Character Limit:** Enforces a maximum character limit of 1000 for input text.
+- **Text Direction:** Switch between Left-to-Right (LTR) and Right-to-Left (RTL) directions.
+- **Error Handling:** Displays toast notifications for errors like empty input or API failures.
+- **Responsive Design:** Fully optimized for all screen sizes.
 
-### 1. Clone the Repository
+## 🖥️ Tech Stack
+
+- **Frontend:** ReactJS, CSS
+- **API Integration:** Google Translation API (via Axios)
+- **Hosting:** Vercel
+- **Testing:** React Testing Library, Jest
+- **Styling:** Custom CSS with variables
+
+## 🏗️ Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/aathifzahirs-projects/quick-translate.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd quick-translate
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Create a `.env` file in the root directory and add your Google API Key:
+
+   ```env
+   REACT_APP_GOOGLE_API_KEY=your_api_key
+   ```
+
+5. Start the development server:
+
+   ```bash
+   npm start
+   ```
+
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📁 Folder Structure
+
+```
+src/
+├── components/          # Reusable components
+├── styles/              # CSS files
+├── App.js               # Main application component
+├── App.css              # Application styling
+├── index.js             # React DOM render
+├── index.css            # Global styles
+└── .env                 # API Key configuration
+```
+
+## 🧪 Running Tests
+
+To run tests, use the following command:
 
 ```bash
-git clone https://github.com/yourusername/translation-app.git
-cd translation-app
+npm test
 ```
 
-### 2. Install Dependencies
+## 📝 License
 
-```bash
-npm install
-```
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-### 3. Setup Environment Variables
+## 🤝 Contributing
 
-Create a `.env` file in the root of the project and add your Google API key:
+Contributions are welcome! If you have suggestions or find bugs, please feel free to open an issue or submit a pull request.
 
-```env
-REACT_APP_GOOGLE_API_KEY=your_google_api_key_here
-```
+## 🫂 Support
 
-### 4. Run the Application
-
-```bash
-npm start
-```
-
-This will run the app locally on `http://localhost:3000`.
-
-### 5. Deploying the App
-
-You can deploy the app to [Vercel](https://vercel.com/) or [Netlify](https://www.netlify.com/). Simply link your GitHub repository to the platform and follow the instructions for deployment.
-
-You can access the live version of the app here: [Quick Translate App](https://quick-translate-one.vercel.app/).
-
-## Usage
-
-1. Enter text into the text box.
-2. Click the "Translate" button to get the translation.
-3. The translated text will appear below, with proper RTL support if the language requires it.
-
-## License
-
-This project is licensed under the MIT License.
+Star this project to show your support. Made with ❤️ by Aathif Zahir.
